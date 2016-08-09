@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from .models import WorkOrder, Product, CycleStatus,Customer, QuoteHead, QuoteDetail,ZmmsOption, MaterialCtrlOption
+from .models import WorkOrder, Product, CycleStatus,Customer, QuoteHead, QuoteDetail,ZmmsOption, MaterialCtrlOption, OrderCategory
 
 # Register your models here.
 class QuoteDetailInline(admin.TabularInline):
@@ -17,9 +17,12 @@ class ProductAdmin(admin.ModelAdmin):
     list_display = ( 'sap_no', 'product_desc', 'specification' ,'cycle_status',)
 
 class WorkOrderAdmin(admin.ModelAdmin):
-    list_display = ( 'recevice_date', 'ships_order','work_order','product',  'ord_amount', 'deliverly' ,)
+    list_display = ( 'category','work_order', 'zmms', 'material_ctrl', 'recevice_date', 'ships_order','customer','reuqest_user','product',  'ord_amount', 'deliverly' ,'manage_memo')
 
 
+
+
+admin.site.register(OrderCategory)
 admin.site.register(CycleStatus)
 admin.site.register(ZmmsOption)
 admin.site.register(MaterialCtrlOption)
