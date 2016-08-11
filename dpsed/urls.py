@@ -15,10 +15,13 @@ Including another URLconf
 """
 from django.conf.urls import url
 from django.contrib import admin
-from .views import alderhome
+from .views import dps_list, dps_create, dps_detail, dps_update, dps_delete
 
 urlpatterns = [
-    url(r'^admin/', admin.site.urls),
-    url(r'^$', alderhome ),
-    #url(r'^employee/$', employee.views.showPerson ),
+    url(r'^$', "dpsed.views.dps_list"),
+    url(r'^create/$', "dpsed.views.dps_create"),
+    url(r'^detail/$', "dpsed.views.dps_detail"),
+    url(r'^update/$', "dpsed.views.dps_update"),
+    url(r'^delete$', "dpsed.views.dps_delete"),
+
 ]
