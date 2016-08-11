@@ -17,7 +17,11 @@ class ProductAdmin(admin.ModelAdmin):
     list_display = ( 'sap_no', 'product_desc', 'specification' ,'cycle_status',)
 
 class WorkOrderAdmin(admin.ModelAdmin):
-    list_display = ( 'category','work_order', 'zmms', 'material_ctrl', 'recevice_date', 'ships_order','customer','reuqest_user','product',  'ord_amount', 'deliverly' ,'manage_memo')
+    list_display = ( 'category','work_order', 'zmms', 'material_ctrl', 'recevice_date', 'ships_order','customer','reuqest_user','material_duty','product',  'ord_amount', 'deliverly' ,'manage_memo')
+    list_display_links = ('work_order',)
+    list_filter = ('category', 'zmms','material_ctrl','material_duty',)
+    search_fields = ['work_order','reuqest_user']
+    list_per_page = 10
 
 
 

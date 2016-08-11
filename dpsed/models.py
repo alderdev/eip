@@ -111,7 +111,7 @@ class WorkOrder(models.Model):
     category = models.ForeignKey(OrderCategory, limit_choices_to={'invalid': False} )
     zmms = models.ForeignKey(ZmmsOption, blank=True, null=True) #models.CharField(max_length=30, blank=True, null=True)
     recevice_date = models.DateField(default=timezone.now) #models.DateField(auto_now_add =True) #  收單日
-    material_ctrl = models.ForeignKey(MaterialCtrlOption) #models.CharField(max_length=30, blank=True, null=True) #物料控管
+    material_ctrl = models.ForeignKey(MaterialCtrlOption, blank=True, null=True) #models.CharField(max_length=30, blank=True, null=True) #物料控管
     #workday = models.IntegerField(default= 1) #工作天
     ships_order = models.CharField(max_length=16, null=True, blank=True) # SAP訂單號碼
     customer = models.ForeignKey(Customer) #客戶編號
