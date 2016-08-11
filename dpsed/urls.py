@@ -15,7 +15,7 @@ Including another URLconf
 """
 from django.conf.urls import url
 from django.contrib import admin
-from .views import dps_list, dps_create, dps_detail, dps_update, dps_delete
+from . import views
 
 urlpatterns = [
     url(r'^$', "dpsed.views.dps_list"),
