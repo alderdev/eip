@@ -27,12 +27,12 @@
   <td>{{ record.material_ctrl }}</td>
   <td>{{ record.ships_order }}</td>
   <td>{{ record.customer }}</td>
-  <td>{{ record.product }}</td>
+  <td>{{ record.product | truncatechars:30 }}</td>
   <td>{{ record.ord_amount }}</td>
   <td>{{ record.deliverly }}</td>
   <td>{{ record.zmms }}</td>
   <td>{{ record.material_duty }}</td>
-  <td>{{ record.manage_memo }}</td>
+  <td>{{ record.manage_memo | linebreaks | truncatechars:30 }}</td>
   </tr>
 {% endfor %}
 

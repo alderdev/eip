@@ -1,6 +1,7 @@
 from django.shortcuts import render, get_object_or_404
 
 from .models import WorkOrder
+from .forms import WorkOrderForm
 
 # Create your views here.
 #若是一個資料集, 就用queryset
@@ -14,7 +15,12 @@ def dps_list(request):
 
 def dps_create(request):
     title = "新增工單"
-    return render(request, "dpsed_detail.html", locals())
+    form = WorkOrderForm(request.POST or None)
+    if form.is_valid():
+        instance = form.save(commit=False)
+        instance.save()
+
+    return render(request, "dpsed_form.html", locals())
 
 def dps_detail(request, id=None):
     title = "工單明細"
