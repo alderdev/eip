@@ -4,8 +4,8 @@
 {% block content  %}
 
   <p>{{ title }}</p>
-<form action="" mothod="POST">{% csrf_token %}
+<form action="" method="POST">{% csrf_token %}
   {{ form.as_p }}
-  <input type="Submit" value="Submit"/>
+  <input type="submit" value="Submit"/>
 </form>
 {% endblock content %}

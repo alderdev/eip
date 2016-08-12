@@ -1,5 +1,6 @@
 from django.shortcuts import render, get_object_or_404
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
+from django.http import HttpResponse, HttpResponseRedirect
 
 from .models import WorkOrder
 from .forms import WorkOrderForm
@@ -12,8 +13,7 @@ def dps_list(request):
     title = "工單列表"
     queryset_list = WorkOrder.objects.all()
 
-    paginator = Paginator(queryset_list, 10) # Show 25 contacts per page
-
+    paginator = Paginator(queryset_list, 10) # Show 10 contacts per page
     page = request.GET.get('page')
     try:
         queryset = paginator.page(page)
@@ -32,6 +32,7 @@ def dps_create(request):
     if form.is_valid():
         instance = form.save(commit=False)
         instance.save()
+        return HttpResponseRedirect(instance.get_absoulte_url())
 
     return render(request, "dpsed_form.html", locals())
 
