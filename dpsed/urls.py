@@ -18,10 +18,9 @@ from django.contrib import admin
 from . import views
 
 urlpatterns = [
-    url(r'^$', "dpsed.views.dps_list"),
-    url(r'^create/$', "dpsed.views.dps_create"),
-    url(r'^detail/$', "dpsed.views.dps_detail"),
-    url(r'^update/$', "dpsed.views.dps_update"),
-    url(r'^delete$', "dpsed.views.dps_delete"),
-
+    url(r'^$', views.dps_list),
+    url(r'^create/$', views.dps_create),
+    url(r'^detail/(?P<id>\d+)/$', views.dps_detail ),
+    url(r'^update/(?P<id>\d+)/$', views.dps_update),
+    url(r'^delete/(?P<id>\d+)/$', views.dps_delete),
 ]

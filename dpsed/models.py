@@ -1,6 +1,7 @@
 from datetime import date
 from django.utils import timezone
 from django.db import models
+#from django.core.urlresolvers import reverse
 
 class OrderCategory(models.Model):
     description = models.CharField(max_length=36, null=False, blank=False)
@@ -26,6 +27,8 @@ class ZmmsOption(models.Model):
 
     def __str__(self):
         return self.description
+
+
 
 class MaterialCtrlOption(models.Model):
     description = models.CharField(max_length=36, null=False, blank=False)
@@ -55,6 +58,7 @@ class Customer(models.Model):
         return ("%s : %s" % (self.sap_no,self.title ) )
 
 
+
 class Product(models.Model):
     sap_no = models.CharField(max_length=36, null=False, blank=False) # SAP料號
     product_desc = models.CharField(max_length=36, null=False, blank=False) # 品名
@@ -65,6 +69,7 @@ class Product(models.Model):
 
     def __str__(self):
         return ("%s : %s" % (self.sap_no,self.product_desc ) )
+
 
 
 class QuoteHead(models.Model):
@@ -79,6 +84,7 @@ class QuoteHead(models.Model):
     modify = models.DateTimeField(auto_now_add=False, auto_now =True)
 
 
+
 class QuoteDetail(models.Model):
     quotehead = models.ForeignKey(QuoteHead) #報價單編號
     line_no = models.IntegerField() #行號
@@ -89,7 +95,6 @@ class QuoteDetail(models.Model):
 
     create_at = models.DateTimeField(auto_now_add=True, auto_now =False)
     modify = models.DateTimeField(auto_now_add=False, auto_now =True)
-
 
 
 
@@ -107,12 +112,12 @@ class SaleOrder(models.Model):
 
 
 
+
 class WorkOrder(models.Model):
     category = models.ForeignKey(OrderCategory, limit_choices_to={'invalid': False} )
     zmms = models.ForeignKey(ZmmsOption, blank=True, null=True) #models.CharField(max_length=30, blank=True, null=True)
     recevice_date = models.DateField(default=timezone.now) #models.DateField(auto_now_add =True) #  收單日
     material_ctrl = models.ForeignKey(MaterialCtrlOption, blank=True, null=True) #models.CharField(max_length=30, blank=True, null=True) #物料控管
-    #workday = models.IntegerField(default= 1) #工作天
     ships_order = models.CharField(max_length=16, null=True, blank=True) # SAP訂單號碼
     customer = models.ForeignKey(Customer) #客戶編號
     work_order = models.CharField(max_length=16, null=False, blank=False, unique=True) # SAP工單號碼
@@ -123,8 +128,11 @@ class WorkOrder(models.Model):
     estimated_finish = models.DateField(blank=True, null=True) # 預計完工日
     reuqest_user = models.CharField(max_length=16, null=False, blank=False) # 申請人
     material_duty = models.CharField(max_length=16, null=False, blank=False) # 備料人
-    #comfirm = models.CharField(max_length=30,blank=True, null=True) # 確認
     manage_memo = models.TextField(blank=True, null=True) # 生管備註
 
     create_at = models.DateTimeField(auto_now_add=True, auto_now =False)
     modify = models.DateTimeField(auto_now_add=False, auto_now =True)
+
+    def get_absoulte_url(self):
+
+        return "/dpsed/detail/%s/" %( str(self.id) )

@@ -19,7 +19,6 @@ from .views import alderhome
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
-    url(r'^dpsed/',  include('dpsed.urls') ),
+    url(r'^dpsed/',  include('dpsed.urls' , namespace="dpsed" )),
     url(r'^$', alderhome ),
-
 ]
