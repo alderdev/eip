@@ -9,3 +9,7 @@ class Post(models.Model):
     invalid = models.BooleanField(default=False)
     create_at = models.DateTimeField(auto_now_add=True, auto_now =False)
     modify = models.DateTimeField(auto_now_add=False, auto_now =True)
+
+    def get_absoulte_url(self):
+
+        return "/posts/detail/%s/" %( str(self.id) )

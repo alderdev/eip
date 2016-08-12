@@ -20,3 +20,30 @@ def post_list(request):
         queryset = paginator.page(paginator.num_pages)
 
     return render(request, "posts_list.html", locals())
+
+
+def post_create(request):
+    title = "新增工單"
+    form = WorkOrderForm(request.POST or None)
+    if form.is_valid():
+        instance = form.save(commit=False)
+        instance.save()
+        return HttpResponseRedirect(instance.get_absoulte_url())
+
+    return render(request, "dpsed_form.html", locals())
+
+def post_detail(request, id=None):
+    title = "工單明細"
+    record = get_object_or_404( Post, id=id)
+    return render(request, "post_detail.html", locals())
+
+def post_update(request, id=None):
+    title = "工單列表"
+    record = get_object_or_404( Post, id=id)
+    return render(request, "post_list.html", locals())
+
+
+def post_delete(request, id=None):
+    title = "工單列表"
+    record = get_object_or_404( Post, id=id)
+    return render(request, "post_list.html", locals())
