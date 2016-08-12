@@ -1,3 +1,4 @@
+
 """eip URL Configuration
 
 The `urlpatterns` list routes URLs to views. For more information please see:
@@ -15,11 +16,9 @@ Including another URLconf
 """
 from django.conf.urls import include,url
 from django.contrib import admin
-from .views import alderhome
+from . import views
 
 urlpatterns = [
-    url(r'^admin/', admin.site.urls),
-    url(r'^dpsed/',  include('dpsed.urls' , namespace="dpsed" )),
-    url(r'^posts/',  include('post.urls' , namespace="posts" )),
-    url(r'^$', alderhome ),
+    url(r'^$', views.post_list),
+
 ]
