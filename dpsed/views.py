@@ -1,9 +1,9 @@
 from django.shortcuts import render, get_object_or_404
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.http import HttpResponse, HttpResponseRedirect
-
+from django.contrib import messages
 from .models import WorkOrder
-from .forms import WorkOrderForm
+from .forms import WorkOrderCreateForm, WorkOrderUpdateForm
 
 # Create your views here.
 #若是一個資料集, 就用queryset
@@ -18,28 +18,37 @@ def dps_list(request):
     try:
         queryset = paginator.page(page)
     except PageNotAnInteger:
-        # If page is not an integer, deliver first page.
         queryset = paginator.page(1)
     except EmptyPage:
-        # If page is out of range (e.g. 9999), deliver last page of results.
         queryset = paginator.page(paginator.num_pages)
 
     return render(request, "dpsed_list.html", locals())
 
 def dps_create(request):
     title = "新增工單"
-    form = WorkOrderForm(request.POST or None)
+    form = WorkOrderCreateForm(request.POST or None)
     if form.is_valid():
         instance = form.save(commit=False)
         instance.save()
+        messages.success(request, "Successfully Create")
         return HttpResponseRedirect(instance.get_absoulte_url())
+    else:
+        messages.error(request, "Has Error ")
 
     return render(request, "dpsed_form.html", locals())
 
 def dps_detail(request, id=None):
     title = "工單明細"
     record = get_object_or_404( WorkOrder, id=id)
-    return render(request, "dpsed_detail.html", locals())
+    form = WorkOrderUpdateForm(request.POST or None, instance = record)
+    if form.is_valid():
+        instance = form.save(commit=False)
+        instance.save()
+        messages.success(request, "Successfully by Save")
+        return HttpResponseRedirect(instance.get_absoulte_url())
+
+
+    return render(request, "dpsed_form.html", locals())
 
 def dps_update(request, id=None):
     title = "工單列表"
