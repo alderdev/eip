@@ -3,7 +3,60 @@
 
 {% block content  %}
 
+<script type="text/javascript">
+
+function showCustName(id)
+{/* 帶出客戶編號的ajax */
+	var xmlhttp;
+	if (id=="")
+	  {
+		  document.getElementById("sap_no_customer").innerHTML="請輸入客戶編號";
+		  //document.getElementById(id).innerHTML="œÐ¿é€JÄæŠìžê®Æ";
+		  return;
+	  }
+	if (window.XMLHttpRequest)
+	  {// code for IE7+, Firefox, Chrome, Opera, Safari
+
+			xmlhttp=new XMLHttpRequest();
+	  }
+	else
+	  {// code for IE6, IE5
+	 		xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
+	  }
+
+	xmlhttp.onreadystatechange=function()
+	{
+
+    if (xmlhttp.readyState==4 &&xmlhttp.status==404){
+      window.alert("無效的客戶編號");
+      document.getElementById("title_customer").value = "";
+      document.getElementById("sap_no_customer").focus() ;
+      document.getElementById("sap_no_customer").selected = true;
+      return;
+    }
+
+
+		if (xmlhttp.readyState==4 && xmlhttp.status==200)
+	   {
+  				var start = xmlhttp.responseText.indexOf("<span>")+6;
+  				var end = xmlhttp.responseText.indexOf("</span>",start);
+  				var x = xmlhttp.responseText.substring(start, end);
+
+  			 	var str = x.split(',');
+          document.getElementById("id_customer").value = str[0];
+  				document.getElementById("sap_no_customer").value = str[1];
+  				document.getElementById("title_customer").value = str[2];
+
+	    }
+	};
+
+	xmlhttp.open("GET","/dpsed/customertitle/"+id+"/",true);
+	xmlhttp.send();
+}
+</script>
+
   <p>{{ title }}</p>
+
 
   {% if messages %}
   <ul class="messages">
@@ -13,8 +66,26 @@
   </ul>
   {% endif %}
 <form action="" method="POST" >{% csrf_token %}
-  {{ form.as_p }}
+  <p><label>Customer Number:</label><input id="sap_no_customer" name="customer" size="20" title="Customer Number" type="text"  onblur="showCustName(this.value)" cssStyle="width:60px" /></p>
+  <p><label>Customer Title:</label><input id="title_customer" name="title" size="20" type="text"  /></p>
+  <p><label>Customer:</label>{{ form.customer }}{{ record.customer.sap_no }}{{ record.customer.title }}</p>
+  <p><label>Request User:</label>{{ form.reuqest_user }}</p>
+  <p><label>Category:</label>{{ form.category }}</p>
+  <p><label>Material Ctrl:</label>{{ form.material_ctrl }}</p>
+  <p><label>Recevice Date:</label>{{ form.recevice_date }}</p>
+  <p><label>Ships Order:</label>{{ form.ships_order }}</p>
+  <p><label>Work Order:</label>{{ form.work_order }}</p>
+  <p><label>Product:</label>{{ form.product }}{{ record.product.sap_no }}</p>
+  <p><label>Product:</label>{{ record.product.product_desc }}</p>
+  <p><label>Amount:</label>{{ form.ord_amount }}</p>
+  <p><label>Deliverly:</label>{{ form.deliverly }}</p>
+  <p><label>Material Duty:</label>{{ form.material_duty }}</p>
+  <p><label>Comment:</label>{{ form.manage_memo }}</p>
+
+
   <button type="submit" class="btn btn-primary" >Save</button>
 </form>
+
+
 
 {% endblock content %}
