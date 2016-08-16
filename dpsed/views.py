@@ -3,17 +3,25 @@ from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.http import HttpResponse, HttpResponseRedirect
 from django.contrib import messages
 from .models import WorkOrder
-from .models import Customer
+from .models import Customer, Product
 from .forms import WorkOrderCreateForm, WorkOrderUpdateForm
 
 # Create your views here.
 #若是一個資料集, 就用queryset
 #若是單筆資料, 就用record
+def product_desc(request,id):
+
+    obj = get_object_or_404( Product, id=id)
+    print(obj.sap_no)
+    return render(request, "ajax_product.html", locals())
+
+
+
 
 def customer_name(request,id):
 
     obj = get_object_or_404( Customer, sap_no=id)
-    print(obj.title)
+    #print(obj.title)
     return render(request, "customer.html", locals())
 
 
