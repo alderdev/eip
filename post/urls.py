@@ -20,6 +20,7 @@ from . import views
 
 urlpatterns = [
     url(r'^$', views.post_list),
+    url(r'^create/$', views.post_create ),
     url(r'^detail/(?P<id>\d+)/$', views.post_detail , name='detail'),
     url(r'^update/(?P<id>\d+)/$', views.post_update),
     url(r'^delete/(?P<id>\d+)/$', views.post_delete),
